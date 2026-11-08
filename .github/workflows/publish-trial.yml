@@ -2,7 +2,7 @@ name: Publish existing trial ZIP
 on:
   push:
     branches: [main]
-    paths: ['release-payload/AetherVoiceTrial-0.1.0.zip.b64']
+    paths: ['release-payload/AetherVoiceTrial-0.1.1.zip.b64']
 permissions:
   contents: write
 jobs:
@@ -16,10 +16,10 @@ jobs:
           import base64
           import hashlib
           from pathlib import Path
-          data = base64.b64decode(Path('release-payload/AetherVoiceTrial-0.1.0.zip.b64').read_text().strip(), validate=True)
-          expected = '97edc05c0d50ff2f744d23b36557dfb7a2bd8e3576555e88b3bddc1531c84772'
+          data = base64.b64decode(Path('release-payload/AetherVoiceTrial-0.1.1.zip.b64').read_text().strip(), validate=True)
+          expected = '153bdde85cfb5e56c2b82524a36f44ad4fb2a3e59c737520679fdb5cb2f93a3a'
           assert hashlib.sha256(data).hexdigest() == expected, 'ZIP SHA-256 mismatch'
-          Path('AetherVoiceTrial-0.1.0.zip').write_bytes(data)
+          Path('AetherVoiceTrial-0.1.1.zip').write_bytes(data)
           print('Verified ZIP SHA-256:', expected)
           PY
       - name: Publish ZIP asset
@@ -27,4 +27,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          gh release create v0.1.0 --target "$GITHUB_SHA" --title '0.1.0 test' --notes 'Windows SAPI Japanese voice trial. Game loading and speech remain unverified. Existing binary uploaded without compilation or execution.' AetherVoiceTrial-0.1.0.zip
+          gh release create v0.1.1 --target "$GITHUB_SHA" --title '0.1.1 test' --notes 'Loopback audio bridge test. Requires local voice_bridge.py on 127.0.0.1:18763. Local preview endpoint verified; online synthesis currently unreliable. Game playback remains unverified. Existing user-compiled binary, no source or voice assets published.' AetherVoiceTrial-0.1.1.zip

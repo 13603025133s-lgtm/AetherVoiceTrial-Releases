@@ -1,0 +1,19 @@
+[
+  {
+    "Author": "Local Trial",
+    "Name": "中文日语配音测试",
+    "InternalName": "AetherVoiceTrial",
+    "AssemblyVersion": "0.1.0.0",
+    "Description": "Windows SAPI 日语固定音色测试，非原声复刻。需自行填写翻译接口与密钥。默认关闭监听；游戏内加载和发声尚待验证。",
+    "Punchline": "以太同行单会话日语配音测试",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "LoadPriority": 0,
+    "Tags": ["voice", "trial"],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://github.com/13603025133s-lgtm/AetherVoiceTrial-Releases/releases/download/v0.1.0/AetherVoiceTrial-0.1.0.zip",
+    "DownloadLinkUpdate": "https://github.com/13603025133s-lgtm/AetherVoiceTrial-Releases/releases/download/v0.1.0/AetherVoiceTrial-0.1.0.zip",
+    "LastUpdate": 1794166182
+  }
+]

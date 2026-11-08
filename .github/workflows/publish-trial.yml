@@ -1,0 +1,30 @@
+name: Publish existing trial ZIP
+on:
+  push:
+    branches: [main]
+    paths: ['release-payload/AetherVoiceTrial-0.1.0.zip.b64']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode and verify existing ZIP
+        run: |
+          python - <<'PY'
+          import base64
+          import hashlib
+          from pathlib import Path
+          data = base64.b64decode(Path('release-payload/AetherVoiceTrial-0.1.0.zip.b64').read_text().strip(), validate=True)
+          expected = '97edc05c0d50ff2f744d23b36557dfb7a2bd8e3576555e88b3bddc1531c84772'
+          assert hashlib.sha256(data).hexdigest() == expected, 'ZIP SHA-256 mismatch'
+          Path('AetherVoiceTrial-0.1.0.zip').write_bytes(data)
+          print('Verified ZIP SHA-256:', expected)
+          PY
+      - name: Publish ZIP asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create v0.1.0 --target "$GITHUB_SHA" --title '0.1.0 test' --notes 'Windows SAPI Japanese voice trial. Game loading and speech remain unverified. Existing binary uploaded without compilation or execution.' AetherVoiceTrial-0.1.0.zip
